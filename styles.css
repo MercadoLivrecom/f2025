@@ -1,0 +1,241 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #000;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header img {
+    max-height: 30px;
+}
+
+.support-icon {
+    cursor: pointer;
+}
+
+.product-section {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.product-section h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.product-section img {
+    width: 90%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    margin-bottom: 10px;
+}
+
+.security-text {
+    font-size: 14px;
+    color: #333;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    line-height: 1.5;
+    background-color: #fff;
+}
+
+.security-text span {
+    color: #ff5722;
+    font-weight: bold;
+}
+
+.price {
+    font-size: 28px;
+    color: #ff5722;
+    font-weight: bold;
+    margin: 10px 0;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.quantity-sold {
+    font-size: 16px;
+    color: #fff;
+    background-color: #ff5722;
+    padding: 6px 12px;
+    border-radius: 20px;
+    margin: 10px 0;
+    font-weight: bold;
+    text-align: center;
+    width: fit-content;
+}
+
+.buy-button {
+    display: inline-block;
+    background-color: #000;
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 12px 30px;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+.buy-button:hover {
+    background-color: #444;
+}
+
+.info-text {
+    font-size: 16px;
+    color: #333;
+    margin-top: 20px;
+    line-height: 1.5;
+}
+
+.info-text a {
+    color: #ff5722;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.info-text a:hover {
+    text-decoration: underline;
+}
+
+.comments-section {
+    margin-top: 30px;
+    width: 90%;
+    padding: 10px;
+    margin: auto;
+}
+
+.comment {
+    display: flex;
+    margin-bottom: 20px;
+    align-items: flex-start;
+}
+
+.comment img {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin-right: 15px;
+}
+
+.comment .user-info {
+    font-size: 14px;
+    color: #333;
+}
+
+.comment .user-info strong {
+    font-size: 16px;
+}
+
+.comment .message {
+    font-size: 14px;
+    color: #555;
+    margin-top: 5px;
+}
+
+.admin-reply {
+    display: flex;
+    margin-top: 10px;
+    align-items: flex-start;
+}
+
+.admin-reply img {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin-right: 15px;
+}
+
+.admin-reply .admin-info {
+    font-size: 14px;
+    color: #333;
+}
+
+.admin-reply .admin-info strong {
+    font-size: 16px;
+}
+
+.admin-reply .reply-message {
+    font-size: 14px;
+    color: #555;
+    margin-top: 5px;
+}
+
+.submit-comment-button {
+    display: block;
+    background-color: #000;
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 12px 30px;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    margin-top: 20px;
+    width: 90%;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding-top: 100px;
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: auto;
+    padding: 20px;
+    border-radius: 5px;
+    width: 80%;
+    max-width: 500px;
+}
+
+.modal-header {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.modal-body input,
+.modal-body textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.modal-footer {
+    text-align: center;
+}
+
+.modal-footer button {
+    background-color: #ff5722;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.modal-footer button:hover {
+    background-color: #e64a19;
+}

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Compre já seu Passe de Elite por apenas R$ 8,99!">
+    <title>Passe de Elite - Atendimento Online</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        header {
+            background-color: #000;
+            width: 100%;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        header img {
+            max-height: 30px;
+        }
+        .chat-container {
+            width: 90%;
+            max-width: 600px;
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            position: relative;
+        }
+        .bot-message, .user-message {
+            display: flex;
+            align-items: center;
+        }
+        .bot-message img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .message-content {
+            padding: 10px;
+            border-radius: 8px;
+            max-width: 80%;
+        }
+        .bot-message .message-content {
+            background-color: #e0e0e0;
+            text-align: left;
+        }
+        .user-message .message-content {
+            background-color: #d4edda;
+            text-align: right;
+            margin-left: auto;
+        }
+        .floating-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #333;
+            color: #fff;
+            padding: 15px 30px;
+            border-radius: 8px;
+            text-align: center;
+            display: none;
+            z-index: 1000;
+            font-size: 16px;
+        }
+        .input-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .input-container input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .input-container button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .input-container button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="1.png" alt="Logo">
+    </header>
+
+    <div class="floating-message" id="floatingMessage">
+        Aguarde, há uma pessoa na sua frente... <br>
+        <span id="timer">15</span> segundos restantes. <br>
+        Não atualize a página!
+    </div>
+
+    <div class="chat-container" id="chatContainer">
+        <div class="bot-message">
+            <img src="sp.png" alt="Bot">
+            <div class="message-content">
+                Olá, tudo bem? Sou a Milena, seu atendimento online. <br>
+                Escolha uma das opções abaixo e digite o número referente:
+                <ul>
+                    <li>(1) Falar com o suporte</li>
+                    <li>(2) Como funciona o passe</li>
+                    <li>(3) Comprar códigos do Free Fire</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="input-container">
+        <input type="text" id="userInput" placeholder="Digite sua mensagem aqui...">
+        <button id="sendButton">Enviar</button>
+    </div>
+
+    <script>
+        const chatContainer = document.getElementById('chatContainer');
+        const floatingMessage = document.getElementById('floatingMessage');
+        const timerElement = document.getElementById('timer');
+        const userInput = document.getElementById('userInput');
+        const sendButton = document.getElementById('sendButton');
+
+        // Exibe mensagem flutuante com temporizador
+        function displayFloatingMessage() {
+            floatingMessage.style.display = 'block';
+            let timer = 15;
+            const interval = setInterval(() => {
+                timer -= 1;
+                timerElement.textContent = timer;
+                if (timer <= 0) {
+                    clearInterval(interval);
+                    floatingMessage.style.display = 'none';
+                }
+            }, 1000);
+        }
+
+        // Adiciona mensagem do bot
+        function addBotMessage(text, button = null) {
+            const message = document.createElement('div');
+            message.className = 'bot-message';
+            message.innerHTML = `
+                <img src="sp.png" alt="Bot">
+                <div class="message-content">${text}</div>
+            `;
+            if (button) {
+                const buttonElement = document.createElement('a');
+                buttonElement.href = button.href;
+                buttonElement.textContent = button.text;
+                buttonElement.className = 'button';
+                message.querySelector('.message-content').appendChild(buttonElement);
+            }
+            chatContainer.appendChild(message);
+        }
+
+        // Adiciona mensagem do usuário
+        function addUserMessage(text) {
+            const message = document.createElement('div');
+            message.className = 'user-message';
+            message.innerHTML = `<div class="message-content">${text}</div>`;
+            chatContainer.appendChild(message);
+        }
+
+        // Processa entrada do usuário
+        function handleUserInput() {
+            const input = userInput.value.trim();
+            if (!input) return;
+            addUserMessage(input);
+
+            setTimeout(() => {
+                addBotMessage("Digitando...");
+                setTimeout(() => {
+                    if (input === "1") {
+                        addBotMessage(
+                            "Para entrar em contato, clique no botão abaixo e será redirecionado para o suporte:",
+                            { href: "https://t.me/Suporte24h_br", text: "Abrir Suporte" }
+                        );
+                    } else if (input === "2") {
+                        addBotMessage(
+                            "Os passes de elite boiado são entregues diretamente pelo seu ID. Não pedimos nenhum dado da sua conta. Após o pagamento, a entrega é imediata, feita pelo nosso bot."
+                        );
+                    } else if (input === "3") {
+                        addBotMessage(
+                            "Para comprar códigos referentes ao Free Fire, entre em contato com nosso suporte. Clique no botão abaixo para abrir o Telegram:",
+                            { href: "https://t.me/Suporte24h_br", text: "Abrir Suporte" }
+                        );
+                    } else {
+                        addBotMessage("Opção inválida. Por favor, digite 1, 2 ou 3.");
+                    }
+                }, 2000);
+            }, 1000);
+
+            userInput.value = '';
+        }
+
+        sendButton.addEventListener('click', handleUserInput);
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleUserInput();
+        });
+
+        // Inicia o temporizador na entrada
+        displayFloatingMessage();
+    </script>
+</body>
+</html>
