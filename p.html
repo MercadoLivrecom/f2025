@@ -1,0 +1,246 @@
+<html lang="pt-BR">
+ <head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>Sessão de Pagamento Online</title> 
+  <link rel="icon" type="image/png" href="favicon.png"> 
+  <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+        }
+
+        /* Cabeçalho */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        header img {
+            max-height: 40px;
+        }
+
+        /* Título principal */
+        .main-title {
+            margin: 20px 0;
+            font-size: 24px;
+            color: #333;
+            text-align: left;
+            padding-left: 20px;
+        }
+
+        .info-container {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .info-container p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        .timer {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .product-info {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f8f8f8;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        /* Quadrado para o QR Code */
+        .qr-code-container {
+            width: 90%;
+            height: 200px;
+            margin: 20px auto;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* Campo chave Pix */
+        .pix-key-container {
+            width: 90%;
+            margin: 20px auto;
+            padding: 10px;
+            background-color: #f8f8f8;
+            border-radius: 8px;
+            font-size: 14px;
+            text-align: center;
+            word-wrap: break-word;
+            cursor: pointer;
+        }
+
+        /* Botão para finalizar a compra */
+        .finalize-button {
+            display: block;
+            width: 90%;
+            margin: 30px auto;
+            padding: 12px;
+            font-size: 18px;
+            color: #fff;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .finalize-button:hover {
+            background-color: #45a049;
+        }
+
+        /* Explicações sobre o pagamento */
+        .payment-explanation {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f8f8f8;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        /* Mensagem flutuante */
+        .floating-message {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            border-radius: 5px;
+            z-index: 1000;
+        }
+
+    </style> 
+ </head> 
+ <body> 
+  <!-- Cabeçalho --> 
+  <header> 
+   <img src="pix.png" alt="Logotipo Pix"> 
+   <img src="ssl.png" alt="Certificado SSL"> 
+  </header> 
+  <!-- Título --> 
+  <h1 class="main-title">Sessão de Pagamento Online</h1> 
+  <!-- Exibição dos dados via parâmetros da URL --> 
+  <div class="info-container"> 
+   <p><strong>Nome:</strong> <span id="name">GEOVANA SOUZA SILVA</span></p> 
+   <p><strong>Telefone:</strong> <span id="phone">(36) 56686-8885</span></p> 
+   <p><strong>ID:</strong> <span id="id">353535656565</span></p> 
+  </div> 
+  <!-- Contador de tempo --> 
+  <div class="timer" id="countdown">
+    05:00 
+  </div> 
+  <!-- Informações do produto --> 
+  <div class="product-info"> 
+   <p><strong>Produto:</strong> Passe de Elite Boia do Free Fire</p> 
+   <p><strong>Valor do Item:</strong> R$ 8,99</p> 
+  </div> 
+  <!-- Quadrado para QR Code --> 
+  <div class="qr-code-container"> 
+   <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAR0AAAEdAQMAAAALpCE4AAAABlBMVEX///8AAABVwtN+AAAACXBIWXMAAA7EAAAOxAGVKw4bAAADYklEQVRoge1aQXKkMAzUFAeOPME/CR9z1VDFx+AnfgJHDlOj7W7BDEk+oE2ND4lBzUGx1GrJMfusz/rza3D3p919/7J78yV21XYbZlh8ygvCr8NezW54uxsee/e5hTUraIY7gzcbN5gWOIvHh+03gPyZHoS349a1fgWSO8eu+z9A/epTYQS53bZqOKXsIMZTZEPXkAMdv5lMj9+DLhuI9mGG/dePH2meDHScTXOEkss7fPMoOBv7sZKB6IQ406wqnsA6SARlAwx5QWaFxN72I/xr6WEqZM8COkoM6lx7FSjuipHsGWOREmlBOBE4VvDWw8WepxTfvFZGUC376AoqOgafjAVK4dW/MjgjCEV1BYhkD8aHd/gGjP915cyUIDM6UUA9HR2DXUzkiDHIhLwgSgI4UeRJf2QDjuq2UZ1lBlGEBc1UkZArxmB/2KW8JgQhB9bI2yrh6JK9ZHxWLssLmgqpMdKYdqpHZjXZ8+TMlCAJdKfdW/DPuIlHu/YtEbKBSD1PyrGVTDn6g+W1ExxHlRgE1YVzOIoq9Rfq1RFZzc6VERT6K9oksA72u4VjftG+CUEUYUxjtUk8ESdTBoVCCltaEA5DHTUVDCNrZmU1eqyWY8oL6pqqlOopuw3SJauUq8mzvKC7Rx+tWRHiidmAysq1v3qljCB4x9rE0RGD6lEYRcE/++lcRtBw/vU1yKAmw7GQf6hvLjOMdCBjh8RE8BA0U5GO5GpX7ZsOpFEF7FSPEUVyVvNGvLO0oJCLHAAolEDx4nlN7N4ddUIQXpj6u4W99VfwPEXOFo9pQew/l5Bjh4kqWIqyaTSdFtRFWYoW+qkeIwSNqwokBjWdQ7DOGpOuWnR38U6EjCBeUbCyWox0OURnZfVrY5oRNMTkojiVmDGoSPFkos6vVSodyM75ltzhGIZ+upTYRSAnBHEcp/EFVLBIaGd4xSz6MmBMB4rLrVrissJjFi0Jyb4jMegIqsJz0KULOVNaAd+snhcUd0RVMiauWlRZfYn+KTFoknrUYM7PKQCHdXGfa3lBGvLrNmtWR30w5ch4Gl8ddVaQRrpVt4tNdomwt7JPC4rJBaXNzLOBepQoXjKDJv2nQshFyt6mGy5dAbwzOCOIGUwkKmtRWeo1sdMo4D1Ezwf6rM/60+sfscrkNtPxQaQAAAAASUVORK5CYII="></p> 
+  </div> 
+  <!-- Chave Pix --> 
+  <div class="pix-key-container" id="pix-key" onclick="copyPixKey()"> 
+   <p><strong>Clique aqui para copiar a chave Pix:</strong></p> 
+   <p id="pix-key-text">00020126780014br.gov.bcb.pix01225207031@vakinha.com.br0230Passe de elite free fire boiar52040000530398654048.995802BR5924RECARGA FREE FIRE ONLINE6009SAO PAULO62070503***63041340</p> 
+  </div> 
+  <!-- Mensagem flutuante --> 
+  <div class="floating-message" id="message">
+    Chave copiada com sucesso! 
+  </div> 
+  <!-- Botão para finalizar a compra --> 
+  <a href="zap.html?name=GEOVANA SOUZA SILVA&amp;phone=(36) 56686-8885&amp;id=353535656565&amp;product=Passe de Elite Free Fire" class="finalize-button" id="whatsapp-button"> FINALIZAR A COMPRA COM TELEGRAM </a> 
+  <!-- Explicações sobre o pagamento --> 
+  <div class="payment-explanation"> 
+   <p><strong>1. Como copiar a chave Pix:</strong> Clique sobre a chave Pix acima para copiá-la para sua área de transferência.</p> 
+  </div> 
+  <div class="payment-explanation"> 
+   <p><strong>2. Como pagar:</strong> Acesse seu aplicativo de pagamento e cole a chave Pix copiada para realizar o pagamento.</p> 
+  </div> 
+  <div class="payment-explanation"> 
+   <p><strong>3. Confirmando o pagamento:</strong> Após efetuar o pagamento, envie o comprovante ou confirme através do telegram.</p> 
+  </div> 
+  <script>
+    // Função para obter parâmetros da URL
+    function getQueryParam(name) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(name);
+    }
+
+    // Preencher informações na página
+    document.getElementById('name').textContent = getQueryParam('name') || 'Não disponível';
+    document.getElementById('phone').textContent = getQueryParam('phone') || 'Não disponível';
+    document.getElementById('id').textContent = getQueryParam('id') || 'Não disponível';
+
+    // Função para iniciar a contagem regressiva
+    function startCountdown() {
+        let countdownTime = 300; // 5 minutos em segundos
+        const countdownDisplay = document.getElementById('countdown');
+        
+        const timer = setInterval(function() {
+            const minutes = Math.floor(countdownTime / 60);
+            const seconds = countdownTime % 60;
+            countdownDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            countdownTime--;
+
+            if (countdownTime < 0) {
+                clearInterval(timer);
+                countdownDisplay.textContent = "00:00";
+            }
+        }, 1000);
+    }
+
+    // Iniciar o temporizador
+    startCountdown();
+
+    // Função para copiar apenas a chave Pix
+    function copyPixKey() {
+        const pixKey = document.getElementById('pix-key-text').innerText;
+        navigator.clipboard.writeText(pixKey).then(function() {
+            showMessage();
+        }).catch(function(err) {
+            console.error('Erro ao copiar a chave: ', err);
+        });
+    }
+
+    // Função para exibir a mensagem flutuante
+    function showMessage() {
+        const message = document.getElementById('message');
+        message.style.display = 'block';
+        setTimeout(function() {
+            message.style.display = 'none';
+        }, 3000);
+    }
+
+    // Enviar dados para o WhatsApp ao clicar no botão
+    const whatsappButton = document.getElementById('whatsapp-button');
+    const whatsappUrl = "zap.html?name=" + getQueryParam('name') + "&phone=" + getQueryParam('phone') + "&id=" + getQueryParam('id') + "&product=Passe de Elite Free Fire";
+    whatsappButton.setAttribute('href', whatsappUrl);
+</script> 
+ </body>
+</html>
